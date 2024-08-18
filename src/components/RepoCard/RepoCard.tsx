@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, {  useState } from "react";
 import { IRepo } from "../../models/models";
 import { LS_FAV_KEY } from "../../store/github/github.slice";
 import { useActions } from "../../hooks/actions";

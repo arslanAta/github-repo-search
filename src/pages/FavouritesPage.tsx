@@ -1,6 +1,5 @@
 import { useAppSelector } from "../hooks/redux";
-import { useSearchUsersQuery } from "../store/github/github.api";
-
+    
 const FavouritesPage = () =>{
     const {favourites} = useAppSelector(state=>state.github)
     return(
