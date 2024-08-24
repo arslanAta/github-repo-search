@@ -10,8 +10,8 @@ function App() {
     <>
       <Navigation/>
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/favourites' element={<FavouritesPage/>}/>
+        <Route path='/github-user-search' element={<HomePage/>}/>
+        <Route path='/github-user-search/favourites' element={<FavouritesPage/>}/>
       </Routes>
     </>
   )
