@@ -18,14 +18,14 @@ const RepoCard = ({ repo }: { repo: IRepo }) => {
         setIsFav(false)
     }
     return (
-        <div className="border py-3 px-5 shadow-md hover:shadow-lg hover:bg-gray-200 transition-all rounded mb-4">
+        <div className="col-span-1 border py-3 px-5 shadow-md hover:shadow-lg hover:bg-gray-200 transition-all rounded">
             <a href={repo.html_url} target="_blank">
-                <h1>{repo.full_name}</h1>
+                <h1 className="truncate">{repo.full_name}</h1>
                 <p>
                     Forks : <span className="font-semibold mr-3">{repo.forks}</span>
                     Watchers: <span className="font-semibold">{repo.watchers}</span>
                 </p>
-                <p className="text-sm">{repo?.description}</p>
+                <p className="text-sm line-clamp-2">{repo?.description}</p>
                 {!isFav && <button onClick={addToFavourite} className=" mt-2 p-1 px-3 bg-yellow-500 rounded">Add</button>}
                 {isFav && <button onClick={removeFromFavourite} className="mt-2 py-1 px-3 bg-red-500 rounded">Remove</button>}
             </a>

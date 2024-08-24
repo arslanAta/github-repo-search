@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLazyGetUserRepoQuery, useSearchUsersQuery } from "../store/github/github.api";
 import { useDebounce } from "../hooks/debounce";
-import RepoCard from "../components/RepoCard/RepoCard";
 import SearchIcon from "../assets/icons/SearchIcon";
+import RepoList from "../components/RepoList/RepoList";
 
 const HomePage = () => {
     const [search, setSearch] = useState('')
@@ -11,11 +11,12 @@ const HomePage = () => {
     const { isError, data, isLoading } = useSearchUsersQuery(debounced, {
         skip: debounced.length < 3
     })
-    const [fetchRepos, { isLoading: areRepoLoading, data: repos }] = useLazyGetUserRepoQuery()
+    const [fetchRepos, { isLoading: areReposLoading, data: repos }] = useLazyGetUserRepoQuery()
 
     const handleSearchRepos = (username: string) => {
         fetchRepos(username)
         setDropdown(false)
+        setSearch(username)
     }
 
     useEffect(() => {
@@ -23,9 +24,9 @@ const HomePage = () => {
         console.log(debounced)
     }, [debounced, data])
     return (
-        <div className="flex justify-center w-screen py-5 px-3 pb-6">
+        <div className="py-5 px-3 pb-6">
             {isError && <p>Error when fetch</p>}
-            <div className="relative w-[550px]">
+            <div className="relative mx-auto w-11/12 sm:w-9/12 md:w-[550px]">
                 <div className="flex gap-2 items-center border shadow-md px-2 rounded">
                     <input
                         type="text"
@@ -41,6 +42,7 @@ const HomePage = () => {
                     {data?.map(user => {
                         return (
                             <li
+                                key={user.id}
                                 className="py-2 px-4 hover:bg-gray-500 hover:text-white"
                                 onClick={() => handleSearchRepos(user.login)}
                             >
@@ -49,17 +51,9 @@ const HomePage = () => {
                         )
                     })}
                 </ul>}
-                <div className="container py-2">
-                    <ul className="mt-2">
-                        {areRepoLoading && <p className="text-center">Loading....</p>}
-                        {repos?.map(repo => {
-                            return (
-                                <RepoCard key={repo.id} repo={repo} />
-                            )
-                        })}
-                    </ul>
-                </div>
+                
             </div>
+            <RepoList areReposLoading={areReposLoading} repos={repos}/>
         </div>
     )
 }
